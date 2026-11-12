@@ -26,9 +26,9 @@
                 <a href="#inicio" class="hover:text-amber-400 transition">Inicio</a>
                 <a href="#catalogo" class="hover:text-amber-400 transition">Catálogo</a>
             </nav>
-            <button onclick="toggleCart()" class="relative bg-blue-950/80 border border-blue-800/60 hover:border-amber-500/50 px-4 py-2 rounded-full flex items-center gap-2 transition">
-                <span class="text-xs font-bold text-amber-400">🛒 Carrito</span>
-                <span id="cart-count" class="text-xs font-bold text-black bg-amber-400 rounded-full h-5 w-5 flex items-center justify-center">0</span>
+            <button onclick="toggleCart()" class="relative bg-amber-500 hover:bg-amber-400 text-black px-4 py-2 rounded-full flex items-center gap-2 transition shadow-lg shadow-amber-500/20 font-bold text-xs">
+                <span>🛒 Carrito</span>
+                <span id="cart-count" class="bg-black text-amber-400 rounded-full h-5 w-5 flex items-center justify-center text-[11px] font-extrabold">0</span>
             </button>
         </div>
     </header>
@@ -60,56 +60,69 @@
                     <h2 class="text-2xl font-extrabold tracking-wider uppercase text-amber-400">Modelos Disponibles</h2>
                     <p class="text-xs text-neutral-400">Busca tu marca favorita o agrega gorras al carrito (¡Mayoreo automático a partir de 12!)</p>
                 </div>
-                <!-- Barra de búsqueda / filtro -->
                 <div class="w-full md:w-72">
                     <input type="text" id="buscador" oninput="filtrarProductos()" placeholder="🔍 Buscar marca o modelo..." class="w-full bg-[#0a1525] border border-blue-900/80 rounded-xl px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-500 transition">
                 </div>
             </div>
 
-            <!-- Grid de 32 Productos -->
             <div id="grid-productos" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                <!-- Se llena con JavaScript de forma exacta -->
             </div>
         </section>
     </main>
 
-    <!-- Modal del Carrito -->
-    <div id="cart-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex justify-center items-center p-4">
-        <div class="bg-[#0a1525] border border-blue-900 rounded-2xl w-full max-w-md p-6 flex flex-col max-h-[90vh]">
-            <div class="flex justify-between items-center mb-4 border-b border-blue-950 pb-3">
-                <h3 class="text-lg font-bold text-amber-400 uppercase">Tu Carrito de Pedido</h3>
-                <button onclick="toggleCart()" class="text-neutral-400 hover:text-white font-bold text-lg">✕</button>
+    <!-- Modal estilo Amazon Checkout -->
+    <div id="cart-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex justify-center items-center p-3 md:p-4">
+        <div class="bg-[#0a1525] border border-blue-900 rounded-2xl w-full max-w-xl p-5 md:p-6 flex flex-col max-h-[92vh] shadow-2xl">
+            
+            <!-- Header del Carrito -->
+            <div class="flex justify-between items-center pb-3 border-b border-blue-950">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">🛒</span>
+                    <h3 class="text-base md:text-lg font-extrabold text-white uppercase tracking-wide">Carrito de compras</h3>
+                </div>
+                <button onclick="toggleCart()" class="text-neutral-400 hover:text-white font-bold text-xl px-2">✕</button>
             </div>
             
-            <div id="cart-info-banner" class="bg-blue-950/50 border border-blue-800/60 p-2.5 rounded-xl mb-3 text-center text-xs text-neutral-300">
-                ¡Lleva 12 o más gorras y paga a <span class="text-amber-400 font-bold">$350 c/u</span> de mayoreo!
-            </div>
-
-            <div id="cart-items" class="flex-grow overflow-y-auto space-y-3 mb-4 pr-1">
-                <p class="text-xs text-neutral-500 text-center py-8">Tu carrito está vacío</p>
-            </div>
-
-            <div class="border-t border-blue-950 pt-3 flex flex-col gap-2 mb-3">
-                <div class="flex justify-between text-xs text-neutral-400">
-                    <span>Piezas seleccionadas:</span>
-                    <span id="total-piezas" class="font-bold text-white">0</span>
+            <!-- Barra de progreso para Mayoreo estilo Amazon Prime -->
+            <div class="my-3 bg-[#060e1a] border border-blue-900/60 p-3 rounded-xl">
+                <div class="flex justify-between items-center text-xs mb-1.5">
+                    <span id="amazon-status-text" class="font-semibold text-neutral-300">Desbloqueo de Mayoreo</span>
+                    <span id="amazon-status-badge" class="font-bold text-amber-400">$350 MXN c/u</span>
                 </div>
-                <div class="flex justify-between text-xs text-neutral-400">
-                    <span>Precio aplicado:</span>
-                    <span id="tipo-precio" class="font-bold text-amber-400">Menudeo ($500 c/u)</span>
-                </div>
-                <div class="flex justify-between text-sm font-extrabold text-white border-t border-blue-950/60 pt-2">
-                    <span>Total estimado:</span>
-                    <span id="total-precio" class="text-amber-400">$0 MXN</span>
+                <div class="w-full bg-blue-950 h-2.5 rounded-full overflow-hidden border border-blue-900">
+                    <div id="amazon-progress-bar" class="bg-gradient-to-r from-amber-500 to-amber-300 h-full transition-all duration-500 w-0"></div>
                 </div>
             </div>
 
-            <div class="border-t border-blue-950 pt-3 flex flex-col gap-2">
-                <button onclick="enviarWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider py-3 rounded-xl transition text-center shadow-lg">
-                    Enviar pedido por WhatsApp 📲
+            <!-- Lista de productos añadidos -->
+            <div id="cart-items" class="flex-grow overflow-y-auto space-y-3 my-2 pr-1 divide-y divide-blue-950/60">
+                <p class="text-xs text-neutral-500 text-center py-10">Tu carrito de compras está vacío</p>
+            </div>
+
+            <!-- Resumen de Pedido estilo Checkout -->
+            <div class="border-t border-blue-950 pt-3 space-y-1.5 text-xs text-neutral-400">
+                <div class="flex justify-between">
+                    <span>Subtotal (<span id="total-piezas" class="text-white font-bold">0</span> piezas):</span>
+                    <span id="subtotal-precio" class="text-white font-semibold">$0 MXN</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Entrega local (Mexicali):</span>
+                    <span class="text-emerald-400 font-bold">GRATIS / Punto a acordar</span>
+                </div>
+                <div class="flex justify-between text-sm font-extrabold text-white border-t border-blue-950 pt-2">
+                    <span>Total del pedido:</span>
+                    <span id="total-precio" class="text-amber-400 text-lg">$0 MXN</span>
+                </div>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="border-t border-blue-950 pt-3 mt-3 flex flex-col gap-2">
+                <button onclick="enviarWhatsApp()" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs uppercase tracking-wider py-3.5 rounded-xl transition text-center shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2">
+                    <span>Proceder al pago por WhatsApp</span>
+                    <span class="text-sm">📲</span>
                 </button>
-                <button onclick="toggleCart()" class="w-full bg-neutral-800 hover:bg-neutral-700 text-neutral-300 font-bold text-xs uppercase py-2 rounded-xl transition">
-                    Seguir viendo catálogo
+                <button onclick="toggleCart()" class="w-full bg-neutral-900 hover:bg-neutral-800 text-neutral-400 font-bold text-xs uppercase py-2.5 rounded-xl transition border border-blue-950">
+                    Seguir comprando
                 </button>
             </div>
         </div>
@@ -120,7 +133,6 @@
     </footer>
 
     <script>
-        // Mapeo exacto y verificado con la lista que proporcionaste
         const productos = [
             { id: "01.jpeg", nombre: "Lucifer / El Makabelico (Chucky Hats)" },
             { id: "02.jpeg", nombre: "Barbas Hats Barbas Records" },
@@ -172,7 +184,7 @@
                         <div class="p-3 flex flex-col gap-2">
                             <span class="text-[11px] font-bold text-neutral-200 line-clamp-1">${prod.nombre}</span>
                             <span class="text-[10px] text-amber-400 font-semibold">$500 MXN (Menudeo)</span>
-                            <button onclick="agregarCarrito('${prod.nombre}', '${prod.id}')" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg transition">
+                            <button onclick="agregarCarrito('${prod.nombre.replace(/'/g, "\\'")}', '${prod.id}')" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg transition shadow-md">
                                 Agregar al Carrito
                             </button>
                         </div>
@@ -191,9 +203,22 @@
         renderizarProductos();
 
         function agregarCarrito(nombre, img) {
-            carrito.push({ nombre, img });
+            let index = carrito.findIndex(item => item.nombre === nombre);
+            if (index !== -1) {
+                carrito[index].cantidad += 1;
+            } else {
+                carrito.push({ nombre, img, cantidad: 1 });
+            }
             actualizarCarrito();
             document.getElementById('cart-modal').classList.remove('hidden');
+        }
+
+        function cambiarCantidad(index, cambio) {
+            carrito[index].cantidad += cambio;
+            if (carrito[index].cantidad <= 0) {
+                carrito.splice(index, 1);
+            }
+            actualizarCarrito();
         }
 
         function eliminarItem(index) {
@@ -202,42 +227,56 @@
         }
 
         function actualizarCarrito() {
-            let totalPiezas = carrito.length;
+            let totalPiezas = carrito.reduce((sum, item) => sum + item.cantidad, 0);
             let esMayoreo = totalPiezas >= 12;
             let precioUnitario = esMayoreo ? 350 : 500;
             let precioTotal = totalPiezas * precioUnitario;
 
             document.getElementById('cart-count').innerText = totalPiezas;
             document.getElementById('total-piezas').innerText = totalPiezas;
-            document.getElementById('tipo-precio').innerText = esMayoreo ? "Mayoreo ($350 c/u)" : "Menudeo ($500 c/u)";
+            document.getElementById('subtotal-precio').innerText = `$${precioTotal} MXN`;
             document.getElementById('total-precio').innerText = `$${precioTotal} MXN`;
 
-            let banner = document.getElementById('cart-info-banner');
+            // Actualizar barra estilo Amazon
+            let pct = Math.min((totalPiezas / 12) * 100, 100);
+            document.getElementById('amazon-progress-bar').style.width = pct + '%';
+            
+            let statusText = document.getElementById('amazon-status-text');
             if (esMayoreo) {
-                banner.innerHTML = `¡Felicidades! Se aplicó precio de mayoreo a <span class="text-amber-400 font-bold">$350 c/u</span> 🎉`;
-                banner.className = "bg-amber-500/10 border border-amber-500/40 p-2.5 rounded-xl mb-3 text-center text-xs text-amber-300";
+                statusText.innerHTML = `¡Precio de Mayoreo aplicado! 🎉`;
             } else {
                 let faltantes = 12 - totalPiezas;
-                banner.innerHTML = `Agrega <span class="text-white font-bold">${faltantes} gorras más</span> para desbloquear mayoreo a <span class="text-amber-400 font-bold">$350 c/u</span>`;
-                banner.className = "bg-blue-950/50 border border-blue-800/60 p-2.5 rounded-xl mb-3 text-center text-xs text-neutral-300";
+                statusText.innerHTML = `Agrega <b class="text-white">${faltantes} gorra${faltantes > 1 ? 's' : ''} más</b> para precio de Mayoreo`;
             }
 
             let contenedor = document.getElementById('cart-items');
             if (totalPiezas === 0) {
-                contenedor.innerHTML = '<p class="text-xs text-neutral-500 text-center py-8">Tu carrito está vacío</p>';
+                contenedor.innerHTML = '<p class="text-xs text-neutral-500 text-center py-10">Tu carrito de compras está vacío</p>';
                 return;
             }
 
             contenedor.innerHTML = carrito.map((item, index) => `
-                <div class="flex items-center justify-between bg-black/40 border border-blue-950/60 p-2.5 rounded-xl">
-                    <div class="flex items-center gap-3">
-                        <img src="${item.img}" class="w-12 h-12 object-cover rounded-lg border border-blue-900">
-                        <div>
-                            <span class="text-xs font-semibold text-neutral-200 line-clamp-1">${item.nombre}</span>
-                            <span class="text-[10px] text-amber-400">$${precioUnitario} MXN</span>
+                <div class="flex items-center justify-between pt-3 pb-1 gap-3">
+                    <img src="${item.img}" class="w-14 h-14 object-cover rounded-xl border border-blue-900 shrink-0 bg-black/50">
+                    <div class="flex-grow overflow-hidden">
+                        <h4 class="text-xs font-bold text-white line-clamp-1">${item.nombre}</h4>
+                        <p class="text-[11px] text-amber-400 font-semibold">$${precioUnitario} MXN <span class="text-[9px] text-neutral-500">${esMayoreo ? '(Mayoreo)' : '(Menudeo)'}</span></p>
+                        
+                        <!-- Control de cantidad estilo Amazon -->
+                        <div class="flex items-center gap-3 mt-1.5">
+                            <div class="flex items-center bg-[#060e1a] border border-blue-900 rounded-lg overflow-hidden">
+                                <button onclick="cambiarCantidad(${index}, -1)" class="px-2.5 py-0.5 text-xs text-neutral-300 hover:bg-blue-900 hover:text-white font-bold transition">-</button>
+                                <span class="px-3 text-xs font-bold text-white">${item.cantidad}</span>
+                                <button onclick="cambiarCantidad(${index}, 1)" class="px-2.5 py-0.5 text-xs text-neutral-300 hover:bg-blue-900 hover:text-white font-bold transition">+</button>
+                            </div>
+                            <button onclick="eliminarItem(${index})" class="text-[11px] text-neutral-500 hover:text-red-400 underline transition flex items-center gap-1">
+                                🗑️ Eliminar
+                            </button>
                         </div>
                     </div>
-                    <button onclick="eliminarItem(${index})" class="text-red-400 hover:text-red-300 font-bold text-xs px-2 py-1">🗑️</button>
+                    <div class="text-right shrink-0">
+                        <span class="text-xs font-extrabold text-white">$${item.cantidad * precioUnitario} MXN</span>
+                    </div>
                 </div>
             `).join('');
         }
@@ -251,24 +290,24 @@
                 alert("Agrega al menos una gorra a tu carrito");
                 return;
             }
-            let totalPiezas = carrito.length;
+            let totalPiezas = carrito.reduce((sum, item) => sum + item.cantidad, 0);
             let esMayoreo = totalPiezas >= 12;
             let precioUnitario = esMayoreo ? 350 : 500;
             let precioTotal = totalPiezas * precioUnitario;
             let tipo = esMayoreo ? "MAYOREO ($350 c/u)" : "MENUDEO ($500 c/u)";
 
-            let mensaje = `Hola, quiero hacer el siguiente pedido en VLZ_HATS:\n\n`;
-            mensaje += `📦 Total de gorras: ${totalPiezas}\n`;
-            mensaje += `💰 Tipo de precio: ${tipo}\n`;
-            mensaje += `💵 Total estimado: $${precioTotal} MXN\n\n`;
-            mensaje += `Modelos seleccionados:\n`;
+            let mensaje = `Hola, quiero confirmar la compra del siguiente pedido de VLZ_HATS:\n\n`;
+            mensaje += `📦 Piezas totales: ${totalPiezas}\n`;
+            mensaje += `💰 Aplicado: ${tipo}\n`;
+            mensaje += `💵 Total del pedido: $${precioTotal} MXN\n\n`;
+            mensaje += `Detalle de artículos:\n`;
             
             carrito.forEach((item, index) => {
-                mensaje += `${index + 1}. ${item.nombre}\n`;
+                mensaje += `${index + 1}. [${item.cantidad}x] ${item.nombre}\n`;
             });
-            mensaje += `\n¿Me confirmas disponibilidad y entrega en Mexicali?`;
+            mensaje += `\n¿Cuándo podríamos coordinar la entrega en Mexicali?`;
             
-            let telefono = "5216861000000"; // Reemplaza con tu número real de WhatsApp
+            let telefono = "5216861183408";
             window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, '_blank');
         }
     </script>
