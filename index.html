@@ -25,13 +25,16 @@
             <nav class="hidden md:flex items-center gap-6 text-xs font-semibold text-neutral-300 uppercase tracking-wider">
                 <a href="#inicio" class="hover:text-amber-400 transition">Inicio</a>
                 <a href="#catalogo" class="hover:text-amber-400 transition">Catálogo</a>
-                <a href="#entregas" class="hover:text-amber-400 transition">Entregas</a>
             </nav>
+            <button onclick="toggleCart()" class="relative bg-blue-950/80 border border-blue-800/60 hover:border-amber-500/50 px-4 py-2 rounded-full flex items-center gap-2 transition">
+                <span class="text-xs font-bold text-amber-400">🛒 Carrito</span>
+                <span id="cart-count" class="text-xs font-bold text-black bg-amber-400 rounded-full h-5 w-5 flex items-center justify-center">0</span>
+            </button>
         </div>
     </header>
 
     <main class="flex-grow relative z-10">
-        <section id="inicio" class="relative overflow-hidden py-24 md:py-32 text-center">
+        <section id="inicio" class="relative overflow-hidden py-20 md:py-28 text-center">
             <div class="max-w-4xl mx-auto px-4">
                 <div class="inline-block text-[11px] font-bold tracking-widest uppercase text-amber-400 bg-amber-500/10 border border-amber-500/20 px-4 py-1.5 rounded-full mb-6">
                     Luxury Streetwear • Mexicali, B.C.
@@ -39,14 +42,15 @@
                 <h1 class="text-4xl md:text-7xl font-extrabold tracking-tight mb-6 uppercase">
                     Colección <span class="gold-gradient">Exclusiva</span>
                 </h1>
-                <p class="text-neutral-400 text-sm md:text-base max-w-xl mx-auto mb-10">
-                    Las mejores marcas y modelos icónicos. Calidad premium, mayoreo y menudeo con entregas seguras en Mexicali.
+                <p class="text-neutral-400 text-sm md:text-base max-w-xl mx-auto mb-4">
+                    Menudeo: <span class="text-white font-bold">$500 MXN</span> | Mayoreo (12+ piezas): <span class="text-amber-400 font-bold">$350 MXN</span> c/u.
                 </p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="#catalogo" class="bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-xl transition shadow-lg shadow-amber-500/20">
-                        Ver Catálogo (32 Modelos)
-                    </a>
-                </div>
+                <p class="text-neutral-400 text-xs md:text-sm max-w-xl mx-auto mb-10">
+                    Entregas seguras en todo Mexicali. Armá tu pedido seleccionando tus modelos favoritos.
+                </p>
+                <a href="#catalogo" class="inline-block bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-xl transition shadow-lg shadow-amber-500/20">
+                    Ver Catálogo (32 Modelos)
+                </a>
             </div>
         </section>
 
@@ -54,288 +58,175 @@
             <div class="flex justify-between items-end mb-10 border-b border-blue-950/60 pb-4">
                 <div>
                     <h2 class="text-2xl font-extrabold tracking-wider uppercase text-amber-400">Modelos Disponibles</h2>
-                    <p class="text-xs text-neutral-400">Selecciona tu gorra favorita y pídela directo al WhatsApp</p>
+                    <p class="text-xs text-neutral-400">Agrega tus gorras al carrito. ¡A partir de 12 piezas aplica precio de mayoreo automáticamente!</p>
                 </div>
             </div>
 
             <!-- Grid de 32 Productos -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                <!-- Producto 1 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="01.jpeg" alt="Gorra VLZ 1" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 01</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2001" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
-                </div>
+                <script>
+                    const productos = [
+                        "Barbas hats inferno 24k Rose Gold", "31 Hats X El Mago", "Baez X Maestro Shifu", "Kirby total black",
+                        "Skull fes", "DANDY HATS X JUNIOR H", "Barbas 77 Last edition", "Rico hats NY CRYSTALS",
+                        "BARBAS X WILLITO", "Barbas BBB hand skull", "31 Hats Mago Universe", "Dandy Hats x JC Hats (Checkmate)",
+                        "Barbas Hats Barbas Records", "Barbas 32", "Barbas Black Edition", "El Titos Caps Hollywood",
+                        "El Titos Caps Camo", "Dandy Hats Midnight Club", "Dante Hats Santa Cruz", "Ny Caps Thunder",
+                        "Flames Red Cap", "Baez X Sello 33", "Cap Dandy x El Mago", "Traka Need",
+                        "Stussy Dark Velvet", "Palace X Red Days", "Barbas Gorra Roja", "Dandy Hats Negro/Oro",
+                        "Barbas Classic White", "Cap San Diego Beige", "La Jajaja 20 Black", "Barbas Special Edition"
+                    ];
 
-                <!-- Producto 2 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="02.jpeg" alt="Gorra VLZ 2" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 02</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2002" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
-                </div>
+                    document.write(productos.map((nombre, i) => {
+                        let num = (i + 1).toString().padStart(2, '0');
+                        return `
+                        <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
+                            <div class="aspect-square bg-black/40 overflow-hidden relative">
+                                <img src="${num}.jpeg" alt="${nombre}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            </div>
+                            <div class="p-3 flex flex-col gap-2">
+                                <span class="text-[11px] font-bold text-neutral-200 line-clamp-1">${nombre}</span>
+                                <span class="text-[10px] text-amber-400 font-semibold">$500 MXN (Menudeo)</span>
+                                <button onclick="agregarCarrito('${nombre}', '${num}.jpeg')" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg transition">
+                                    Agregar al Carrito
+                                </button>
+                            </div>
+                        </div>`;
+                    }).join(''));
+                </script>
+            </div>
+        </section>
+    </main>
 
-                <!-- Producto 3 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="03.jpeg" alt="Gorra VLZ 3" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 03</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2003" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
-                </div>
+    <!-- Modal del Carrito -->
+    <div id="cart-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex justify-center items-center p-4">
+        <div class="bg-[#0a1525] border border-blue-900 rounded-2xl w-full max-w-md p-6 flex flex-col max-h-[90vh]">
+            <div class="flex justify-between items-center mb-4 border-b border-blue-950 pb-3">
+                <h3 class="text-lg font-bold text-amber-400 uppercase">Tu Carrito de Pedido</h3>
+                <button onclick="toggleCart()" class="text-neutral-400 hover:text-white font-bold text-lg">✕</button>
+            </div>
+            
+            <div id="cart-info-banner" class="bg-blue-950/50 border border-blue-800/60 p-2.5 rounded-xl mb-3 text-center text-xs text-neutral-300">
+                ¡Lleva 12 o más gorras y paga a <span class="text-amber-400 font-bold">$350 c/u</span> de mayoreo!
+            </div>
 
-                <!-- Producto 4 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="04.jpeg" alt="Gorra VLZ 4" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 04</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2004" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
-                </div>
+            <div id="cart-items" class="flex-grow overflow-y-auto space-y-3 mb-4 pr-1">
+                <p class="text-xs text-neutral-500 text-center py-8">Tu carrito está vacío</p>
+            </div>
 
-                <!-- Producto 5 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="05.jpeg" alt="Gorra VLZ 5" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 05</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2005" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
+            <div class="border-t border-blue-950 pt-3 flex flex-col gap-2 mb-3">
+                <div class="flex justify-between text-xs text-neutral-400">
+                    <span>Piezas seleccionadas:</span>
+                    <span id="total-piezas" class="font-bold text-white">0</span>
                 </div>
-
-                <!-- Producto 6 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="06.jpeg" alt="Gorra VLZ 6" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 06</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2006" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
+                <div class="flex justify-between text-xs text-neutral-400">
+                    <span>Precio aplicado:</span>
+                    <span id="tipo-precio" class="font-bold text-amber-400">Menudeo ($500 c/u)</span>
                 </div>
-
-                <!-- Producto 7 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="07.jpeg" alt="Gorra VLZ 7" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 07</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2007" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
+                <div class="flex justify-between text-sm font-extrabold text-white border-t border-blue-950/60 pt-2">
+                    <span>Total estimado:</span>
+                    <span id="total-precio" class="text-amber-400">$0 MXN</span>
                 </div>
+            </div>
 
-                <!-- Producto 8 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="08.jpeg" alt="Gorra VLZ 8" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            <div class="border-t border-blue-950 pt-3 flex flex-col gap-2">
+                <button onclick="enviarWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider py-3 rounded-xl transition text-center shadow-lg">
+                    Enviar pedido por WhatsApp 📲
+                </button>
+                <button onclick="toggleCart()" class="w-full bg-neutral-800 hover:bg-neutral-700 text-neutral-300 font-bold text-xs uppercase py-2 rounded-xl transition">
+                    Seguir viendo catálogo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="border-t border-blue-950/60 bg-[#060e1a] py-8 text-center text-xs text-neutral-500">
+        <p>&copy; 2026 VLZ_HATS Mexicali. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        let carrito = [];
+
+        function agregarCarrito(nombre, img) {
+            carrito.push({ nombre, img });
+            actualizarCarrito();
+            document.getElementById('cart-modal').classList.remove('hidden');
+        }
+
+        function eliminarItem(index) {
+            carrito.splice(index, 1);
+            actualizarCarrito();
+        }
+
+        function actualizarCarrito() {
+            let totalPiezas = carrito.length;
+            let esMayoreo = totalPiezas >= 12;
+            let precioUnitario = esMayoreo ? 350 : 500;
+            let precioTotal = totalPiezas * precioUnitario;
+
+            document.getElementById('cart-count').innerText = totalPiezas;
+            document.getElementById('total-piezas').innerText = totalPiezas;
+            document.getElementById('tipo-precio').innerText = esMayoreo ? "Mayoreo ($350 c/u)" : "Menudeo ($500 c/u)";
+            document.getElementById('total-precio').innerText = `$${precioTotal} MXN`;
+
+            let banner = document.getElementById('cart-info-banner');
+            if (esMayoreo) {
+                banner.innerHTML = `¡Felicidades! Se aplicó precio de mayoreo a <span class="text-amber-400 font-bold">$350 c/u</span> 🎉`;
+                banner.className = "bg-amber-500/10 border border-amber-500/40 p-2.5 rounded-xl mb-3 text-center text-xs text-amber-300";
+            } else {
+                let faltantes = 12 - totalPiezas;
+                banner.innerHTML = `Agrega <span class="text-white font-bold">${faltantes} gorras más</span> para desbloquear mayoreo a <span class="text-amber-400 font-bold">$350 c/u</span>`;
+                banner.className = "bg-blue-950/50 border border-blue-800/60 p-2.5 rounded-xl mb-3 text-center text-xs text-neutral-300";
+            }
+
+            let contenedor = document.getElementById('cart-items');
+            if (totalPiezas === 0) {
+                contenedor.innerHTML = '<p class="text-xs text-neutral-500 text-center py-8">Tu carrito está vacío</p>';
+                return;
+            }
+
+            contenedor.innerHTML = carrito.map((item, index) => `
+                <div class="flex items-center justify-between bg-black/40 border border-blue-950/60 p-2.5 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <img src="${item.img}" class="w-12 h-12 object-cover rounded-lg border border-blue-900">
+                        <div>
+                            <span class="text-xs font-semibold text-neutral-200 line-clamp-1">${item.nombre}</span>
+                            <span class="text-[10px] text-amber-400">$${precioUnitario} MXN</span>
+                        </div>
                     </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 08</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2008" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
+                    <button onclick="eliminarItem(${index})" class="text-red-400 hover:text-red-300 font-bold text-xs px-2 py-1">🗑️</button>
                 </div>
+            `).join('');
+        }
 
-                <!-- Producto 9 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="09.jpeg" alt="Gorra VLZ 9" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 09</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2009" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
-                </div>
+        function toggleCart() {
+            document.getElementById('cart-modal').classList.toggle('hidden');
+        }
 
-                <!-- Producto 10 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="10.jpeg" alt="Gorra VLZ 10" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 10</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2010" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
-                </div>
+        function enviarWhatsApp() {
+            if (carrito.length === 0) {
+                alert("Agrega al menos una gorra a tu carrito");
+                return;
+            }
+            let totalPiezas = carrito.length;
+            let esMayoreo = totalPiezas >= 12;
+            let precioUnitario = esMayoreo ? 350 : 500;
+            let precioTotal = totalPiezas * precioUnitario;
+            let tipo = esMayoreo ? "MAYOREO ($350 c/u)" : "MENUDEO ($500 c/u)";
 
-                <!-- Producto 11 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="11.jpeg" alt="Gorra VLZ 11" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 11</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2011" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Producto 12 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="12.jpeg" alt="Gorra VLZ 12" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 12</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2012" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Producto 13 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="13.jpeg" alt="Gorra VLZ 13" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 13</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2013" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Producto 14 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="14.jpeg" alt="Gorra VLZ 14" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 14</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2014" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Producto 15 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="15.jpeg" alt="Gorra VLZ 15" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 15</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2015" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Producto 16 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="16.jpeg" alt="Gorra VLZ 16" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 16</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2016" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Producto 17 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="17.jpeg" alt="Gorra VLZ 17" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 17</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2017" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Producto 18 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="18.jpeg" alt="Gorra VLZ 18" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 18</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2018" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Producto 19 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="19.jpeg" alt="Gorra VLZ 19" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 19</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2019" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Producto 20 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="20.jpeg" alt="Gorra VLZ 20" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 20</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2020" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Producto 21 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="21.jpeg" alt="Gorra VLZ 21" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap-2">
-                        <span class="text-[11px] font-bold text-neutral-200">Modelo 21</span>
-                        <a href="https://wa.me/6861000000?text=Hola,%20me%20interesa%20la%20gorra%20Modelo%2021" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg text-center transition">
-                            Pedir por WhatsApp
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Producto 22 -->
-                <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                    <div class="aspect-square bg-black/40 overflow-hidden relative">
-                        <img src="22.jpeg" alt="Gorra VLZ 22" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-3 flex flex-col gap
+            let mensaje = `Hola, quiero hacer el siguiente pedido en VLZ_HATS:\n\n`;
+            mensaje += `📦 Total de gorras: ${totalPiezas}\n`;
+            mensaje += `💰 Tipo de precio: ${tipo}\n`;
+            mensaje += `💵 Total estimado: $${precioTotal} MXN\n\n`;
+            mensaje += `Modelos seleccionados:\n`;
+            
+            carrito.forEach((item, index) => {
+                mensaje += `${index + 1}. ${item.nombre}\n`;
+            });
+            mensaje += `\n¿Me confirmas disponibilidad y entrega en Mexicali?`;
+            
+            let telefono = "5216861000000"; // Reemplaza con tu número real de Mexicali
+            window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, '_blank');
+        }
+    </script>
+</body>
+</html>
