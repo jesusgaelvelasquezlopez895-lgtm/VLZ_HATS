@@ -68,7 +68,7 @@
 
             <!-- Grid de 32 Productos -->
             <div id="grid-productos" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                <!-- Se llena con JavaScript dinámicamente -->
+                <!-- Se llena con JavaScript de forma exacta -->
             </div>
         </section>
     </main>
@@ -120,15 +120,40 @@
     </footer>
 
     <script>
+        // Mapeo exacto y verificado con la lista que proporcionaste
         const productos = [
-            "Barbas hats inferno 24k Rose Gold", "31 Hats X El Mago", "Baez X Maestro Shifu", "Kirby total black",
-            "Skull fes", "DANDY HATS X JUNIOR H", "Barbas 77 Last edition", "Rico hats NY CRYSTALS",
-            "BARBAS X WILLITO", "Barbas BBB hand skull", "31 Hats Mago Universe", "Dandy Hats x JC Hats (Checkmate)",
-            "Barbas Hats Barbas Records", "Barbas 32", "Barbas Black Edition", "El Tiros Caps Hollywood",
-            "El Tiros Caps Camo", "Dandy Hats Midnight Club", "Dante Hats Santa Cruz", "Ny Caps Thunder",
-            "Flames Red Cap", "Baez X Sello 33", "Cap Dandy x El Mago", "Traka Need",
-            "Stussy Dark Velvet", "Palace X Red Days", "Barbas Gorra Roja", "Dandy Hats Negro/Oro",
-            "Barbas Classic White", "Cap San Diego Beige", "La Jajaja 20 Black", "Barbas Special Edition"
+            { id: "01.jpeg", nombre: "Lucifer / El Makabelico (Chucky Hats)" },
+            { id: "02.jpeg", nombre: "Barbas Hats Barbas Records" },
+            { id: "03.jpeg", nombre: "Barbas Hats 77 Edition Black Edition" },
+            { id: "04.jpeg", nombre: "Hollywood (El Tiros Caps)" },
+            { id: "05.jpeg", nombre: "Concrete Jungle (31 Hats)" },
+            { id: "06.jpeg", nombre: "Rosones (JC Hats x Tito Doble P)" },
+            { id: "07.jpeg", nombre: "Lost Dandy (Dandy Hats x Lost Hills Club)" },
+            { id: "08.jpeg", nombre: "Ayasaki (Malvados Caps)" },
+            { id: "09.jpeg", nombre: "Galaxy Star (Star Hats)" },
+            { id: "10.jpeg", nombre: "Midnight Club (Dandy Hats)" },
+            { id: "11.jpeg", nombre: "B-Cross Camo (Barbas Hats)" },
+            { id: "12.jpeg", nombre: "Thunder (NY Xcap)" },
+            { id: "13.jpeg", nombre: "La Flames Red (Xcap)" },
+            { id: "14.jpeg", nombre: "Baez x Maestro Shifu 3.0" },
+            { id: "15.jpeg", nombre: "La Van Cleef (Rico Hats)" },
+            { id: "16.jpeg", nombre: "Barbas 77 Last Edition Gold" },
+            { id: "17.jpeg", nombre: "On Cloud" },
+            { id: "18.jpeg", nombre: "Dddandyyyyy (Dandy Hats)" },
+            { id: "19.jpeg", nombre: "San Diego Beige (Big Boss)" },
+            { id: "20.jpeg", nombre: "La Japan Kirby 2.0 Total Black (Dmg Brand)" },
+            { id: "21.jpeg", nombre: "B-Star Red Camo (Barbas Hats)" },
+            { id: "22.jpeg", nombre: "Psicodelica Sad Boyz 2.0 (Dandy Hats x Junior H)" },
+            { id: "23.jpeg", nombre: "La Chrome Gold (Rico Hats)" },
+            { id: "24.jpeg", nombre: "Son of God 32 (Baez x Shifu)" },
+            { id: "25.jpeg", nombre: "Child of God (Rude Awakenings)" },
+            { id: "26.jpeg", nombre: "Star Hats Club" },
+            { id: "27.jpeg", nombre: "Sad Forever y Lloro (Dandy Hats x Junior H)" },
+            { id: "28.jpeg", nombre: "Alo Black (Alo)" },
+            { id: "29.jpeg", nombre: "Lucifer Diablo High Quality 1.1 (Chucky Hats)" },
+            { id: "30.jpeg", nombre: "Dias Nublados (Dandy Hats x Junior H)" },
+            { id: "31.jpeg", nombre: "Xcalibvr (Padrino Hats x Victor Mendivil)" },
+            { id: "32.jpeg", nombre: "Checkmate (Dandy Hats x JC Hats)" }
         ];
 
         let carrito = [];
@@ -137,18 +162,17 @@
             let contenedor = document.getElementById("grid-productos");
             let html = "";
 
-            productos.forEach((nombre, i) => {
-                let num = (i + 1).toString().padStart(2, '0');
-                if (nombre.toLowerCase().includes(filtro.toLowerCase())) {
+            productos.forEach(prod => {
+                if (prod.nombre.toLowerCase().includes(filtro.toLowerCase())) {
                     html += `
                     <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
                         <div class="aspect-square bg-black/40 overflow-hidden relative">
-                            <img src="${num}.jpeg" alt="${nombre}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="${prod.id}" alt="${prod.nombre}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                         </div>
                         <div class="p-3 flex flex-col gap-2">
-                            <span class="text-[11px] font-bold text-neutral-200 line-clamp-1">${nombre}</span>
+                            <span class="text-[11px] font-bold text-neutral-200 line-clamp-1">${prod.nombre}</span>
                             <span class="text-[10px] text-amber-400 font-semibold">$500 MXN (Menudeo)</span>
-                            <button onclick="agregarCarrito('${nombre}', '${num}.jpeg')" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg transition">
+                            <button onclick="agregarCarrito('${prod.nombre}', '${prod.id}')" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg transition">
                                 Agregar al Carrito
                             </button>
                         </div>
@@ -244,7 +268,7 @@
             });
             mensaje += `\n¿Me confirmas disponibilidad y entrega en Mexicali?`;
             
-            let telefono = "5216861000000"; // Reemplaza con tu número real de Mexicali
+            let telefono = "5216861000000"; // Reemplaza con tu número real de WhatsApp
             window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, '_blank');
         }
     </script>
