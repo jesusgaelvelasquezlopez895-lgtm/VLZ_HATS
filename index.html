@@ -55,44 +55,20 @@
         </section>
 
         <section id="catalogo" class="py-16 max-w-6xl mx-auto px-4">
-            <div class="flex justify-between items-end mb-10 border-b border-blue-950/60 pb-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 border-b border-blue-950/60 pb-6 gap-4">
                 <div>
                     <h2 class="text-2xl font-extrabold tracking-wider uppercase text-amber-400">Modelos Disponibles</h2>
-                    <p class="text-xs text-neutral-400">Agrega tus gorras al carrito. ¡A partir de 12 piezas aplica precio de mayoreo automáticamente!</p>
+                    <p class="text-xs text-neutral-400">Busca tu marca favorita o agrega gorras al carrito (¡Mayoreo automático a partir de 12!)</p>
+                </div>
+                <!-- Barra de búsqueda / filtro -->
+                <div class="w-full md:w-72">
+                    <input type="text" id="buscador" oninput="filtrarProductos()" placeholder="🔍 Buscar marca o modelo..." class="w-full bg-[#0a1525] border border-blue-900/80 rounded-xl px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-500 transition">
                 </div>
             </div>
 
             <!-- Grid de 32 Productos -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                <script>
-                    const productos = [
-                        "Barbas hats inferno 24k Rose Gold", "31 Hats X El Mago", "Baez X Maestro Shifu", "Kirby total black",
-                        "Skull fes", "DANDY HATS X JUNIOR H", "Barbas 77 Last edition", "Rico hats NY CRYSTALS",
-                        "BARBAS X WILLITO", "Barbas BBB hand skull", "31 Hats Mago Universe", "Dandy Hats x JC Hats (Checkmate)",
-                        "Barbas Hats Barbas Records", "Barbas 32", "Barbas Black Edition", "El Titos Caps Hollywood",
-                        "El Titos Caps Camo", "Dandy Hats Midnight Club", "Dante Hats Santa Cruz", "Ny Caps Thunder",
-                        "Flames Red Cap", "Baez X Sello 33", "Cap Dandy x El Mago", "Traka Need",
-                        "Stussy Dark Velvet", "Palace X Red Days", "Barbas Gorra Roja", "Dandy Hats Negro/Oro",
-                        "Barbas Classic White", "Cap San Diego Beige", "La Jajaja 20 Black", "Barbas Special Edition"
-                    ];
-
-                    document.write(productos.map((nombre, i) => {
-                        let num = (i + 1).toString().padStart(2, '0');
-                        return `
-                        <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
-                            <div class="aspect-square bg-black/40 overflow-hidden relative">
-                                <img src="${num}.jpeg" alt="${nombre}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                            </div>
-                            <div class="p-3 flex flex-col gap-2">
-                                <span class="text-[11px] font-bold text-neutral-200 line-clamp-1">${nombre}</span>
-                                <span class="text-[10px] text-amber-400 font-semibold">$500 MXN (Menudeo)</span>
-                                <button onclick="agregarCarrito('${nombre}', '${num}.jpeg')" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg transition">
-                                    Agregar al Carrito
-                                </button>
-                            </div>
-                        </div>`;
-                    }).join(''));
-                </script>
+            <div id="grid-productos" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                <!-- Se llena con JavaScript dinámicamente -->
             </div>
         </section>
     </main>
@@ -144,7 +120,51 @@
     </footer>
 
     <script>
+        const productos = [
+            "Barbas hats inferno 24k Rose Gold", "31 Hats X El Mago", "Baez X Maestro Shifu", "Kirby total black",
+            "Skull fes", "DANDY HATS X JUNIOR H", "Barbas 77 Last edition", "Rico hats NY CRYSTALS",
+            "BARBAS X WILLITO", "Barbas BBB hand skull", "31 Hats Mago Universe", "Dandy Hats x JC Hats (Checkmate)",
+            "Barbas Hats Barbas Records", "Barbas 32", "Barbas Black Edition", "El Tiros Caps Hollywood",
+            "El Tiros Caps Camo", "Dandy Hats Midnight Club", "Dante Hats Santa Cruz", "Ny Caps Thunder",
+            "Flames Red Cap", "Baez X Sello 33", "Cap Dandy x El Mago", "Traka Need",
+            "Stussy Dark Velvet", "Palace X Red Days", "Barbas Gorra Roja", "Dandy Hats Negro/Oro",
+            "Barbas Classic White", "Cap San Diego Beige", "La Jajaja 20 Black", "Barbas Special Edition"
+        ];
+
         let carrito = [];
+
+        function renderizarProductos(filtro = "") {
+            let contenedor = document.getElementById("grid-productos");
+            let html = "";
+
+            productos.forEach((nombre, i) => {
+                let num = (i + 1).toString().padStart(2, '0');
+                if (nombre.toLowerCase().includes(filtro.toLowerCase())) {
+                    html += `
+                    <div class="bg-[#0a1525] border border-blue-950/80 rounded-xl overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition">
+                        <div class="aspect-square bg-black/40 overflow-hidden relative">
+                            <img src="${num}.jpeg" alt="${nombre}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div class="p-3 flex flex-col gap-2">
+                            <span class="text-[11px] font-bold text-neutral-200 line-clamp-1">${nombre}</span>
+                            <span class="text-[10px] text-amber-400 font-semibold">$500 MXN (Menudeo)</span>
+                            <button onclick="agregarCarrito('${nombre}', '${num}.jpeg')" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-[10px] tracking-wider uppercase py-2 rounded-lg transition">
+                                Agregar al Carrito
+                            </button>
+                        </div>
+                    </div>`;
+                }
+            });
+
+            contenedor.innerHTML = html || '<p class="col-span-full text-center text-xs text-neutral-500 py-10">No se encontraron gorras con esa búsqueda</p>';
+        }
+
+        function filtrarProductos() {
+            let texto = document.getElementById("buscador").value;
+            renderizarProductos(texto);
+        }
+
+        renderizarProductos();
 
         function agregarCarrito(nombre, img) {
             carrito.push({ nombre, img });
